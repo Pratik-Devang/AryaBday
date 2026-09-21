@@ -302,7 +302,7 @@ export function FlappyGame() {
               <>
                 <span className={styles.overlayTag}>LEVEL CLEARED!</span>
                 <h2>KHILKHILAATI HUI YAADEIN UNLOCKED ♡</h2>
-                <p>You escaped all {targetScore} blanket towers.</p>
+                <p>chaddar nalla, Arya balla</p>
                 <a className={styles.rewardLink} href="/rewards/blanket-flight">OPEN PHOTOS</a>
                 <button type="button" onClick={resetGame}>PLAY AGAIN</button>
               </>

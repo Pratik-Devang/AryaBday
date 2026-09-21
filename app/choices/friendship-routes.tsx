@@ -29,6 +29,7 @@ const routeInfo: Record<Route, { name: string; label: string; symbol: string }> 
 };
 
 const routeVideos: Partial<Record<Route, string>> = {
+  manasvi: '/videos/manasvi.mp4',
   aditya: '/videos/aditya.mp4',
   nikhil: '/videos/nikhil.mp4',
   sharanya: '/videos/sharanya.mp4',

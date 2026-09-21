@@ -1,4 +1,5 @@
 import { MotionController } from './motion-controller';
+import { PixelBuddy } from './pixel-buddy';
 import { ProgressStatus } from './progress-status';
 
 const levels = [
@@ -81,9 +82,17 @@ export default function Home() {
         <div>
           <p className="eyebrow">A DIFFERENT KIND OF ADVENTURE</p>
           <h2 id="routes-teaser-title">FRIENDSHIP ROUTES</h2>
-          <p>Five choices. Four hidden routes. One final message waiting at the end.</p>
+          <p>Six choices. Four hidden routes. One final message waiting at the end.</p>
         </div>
-        <a href="/choices">ENTER THE STORY <span aria-hidden="true">→</span></a>
+        <div className="routes-teaser-panel">
+          <div className="routes-teaser-sprites" aria-hidden="true">
+            <PixelBuddy variant="pink" />
+            <PixelBuddy variant="owlet" />
+            <PixelBuddy variant="dude" />
+          </div>
+          <p>4 ROUTES + 1 FINAL</p>
+          <a href="/choices">ENTER THE STORY <span aria-hidden="true">→</span></a>
+        </div>
       </section>
 
       <footer className="scroll-reveal reveal-up"><span>© MADE FOR ARYA</span><span>WITH MANY, MANY HEARTS ♥</span></footer>
