@@ -3,8 +3,8 @@ import { PixelBuddy } from './pixel-buddy';
 import { ProgressStatus } from './progress-status';
 
 const levels = [
-  { number: '01', title: 'CHADDAR PARINDA', symbol: '↑', href: '/games/flappy' },
-  { number: '02', title: 'FACE DODGE', symbol: '↔', href: '/games/dodger' },
+  { number: '01', title: 'CHADDAR PARINDA', symbol: '↑', href: '/games/flappy', cta: 'PLAY NOW' },
+  { number: '02', title: 'BACHKE REHNA!', symbol: '↔', href: '/games/dodger', cta: 'BHAAG ARYA BHAAG' },
 ];
 
 export default function Home() {
@@ -60,7 +60,7 @@ export default function Home() {
               <>
                 <div className="level-topline"><span>LEVEL {level.number}</span><span className="lock" aria-hidden="true">{level.href ? '▶' : '▣'}</span></div>
                 <div className="level-symbol" aria-hidden="true">{level.symbol}</div>
-                <h3>{level.title}</h3><p>{level.href ? 'PLAY NOW' : 'LOCKED'}</p>
+                <h3>{level.title}</h3><p>{level.href ? level.cta : 'LOCKED'}</p>
               </>
             );
 

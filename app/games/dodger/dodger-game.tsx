@@ -223,7 +223,7 @@ export function DodgerGame() {
         <canvas ref={canvasRef} width={WIDTH} height={HEIGHT} aria-label="Move left and right to avoid incoming faces" />
         {status !== 'playing' && (
           <div className={styles.overlay}>
-            {status === 'ready' && <><span>READY?</span><h2>DODGE THE DRAMA!</h2><p>Move between three lanes and avoid 12 incoming faces.</p><button type="button" onClick={startGame}>START DODGING</button>{previouslyCompleted && <a className={styles.rewardLink} href="/rewards/face-dodge">VIEW PHOTOS</a>}</>}
+            {status === 'ready' && <><span>TAIYAAR?</span><h2>BACHKE REHNA RE BABA!</h2><p>Teen lanes, baarah chehre. Takraayi toh gayi.</p><button type="button" onClick={startGame}>BHAAG ARYA BHAAG</button>{previouslyCompleted && <a className={styles.rewardLink} href="/rewards/face-dodge">VIEW PHOTOS</a>}</>}
             {status === 'lost' && <><span>CAUGHT!</span><h2>TOO MUCH FACE.</h2><p>You dodged {score}. Try switching lanes a little earlier.</p><button type="button" onClick={startGame}>TRY AGAIN</button></>}
             {status === 'won' && <><span>LEVEL CLEARED!</span><h2>KHILKHILAATI HUI YAADEIN UNLOCKED ♡</h2><p>You dodged all 12 incoming faces.</p><a className={styles.rewardLink} href="/rewards/face-dodge">OPEN PHOTOS</a><button type="button" onClick={startGame}>PLAY AGAIN</button></>}
           </div>
