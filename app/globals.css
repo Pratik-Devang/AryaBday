@@ -23,7 +23,7 @@ a { color: inherit; }
   background-position: 0 0;
   background-size: 384px 96px;
   image-rendering: pixelated;
-  animation: buddy-idle 1.6s steps(4) infinite;
+  animation: buddy-idle .8s steps(4) infinite;
   contain: strict;
 }
 .pixel-buddy-pink { background-image: url('/sprites/pink-monster-idle.png'); }
@@ -78,7 +78,7 @@ h1 span { display: block; color: var(--hot-pink); }
   background-size: 640px 160px;
   image-rendering: pixelated;
   filter: drop-shadow(6px 7px 0 rgba(92,38,69,.24));
-  animation: mascot-idle 1.4s steps(4) infinite;
+  animation: mascot-idle .7s steps(4) infinite;
 }
 .window-screen p { margin: 0 0 14px; font-size: .74rem; font-weight: 900; text-align: center; }
 .load-track { width: min(100%,270px); height: 22px; padding: 3px; background: white; border: 3px solid var(--plum); }
