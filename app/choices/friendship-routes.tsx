@@ -28,6 +28,12 @@ const routeInfo: Record<Route, { name: string; label: string; symbol: string }> 
   pratik: { name: 'Pratik', label: 'The Final Route', symbol: '♥' },
 };
 
+const routeVideos: Partial<Record<Route, string>> = {
+  aditya: '/videos/aditya.mp4',
+  nikhil: '/videos/nikhil.mp4',
+  sharanya: '/videos/sharanya.mp4',
+};
+
 const questions: Array<{ prompt: string; scene: string; answers: Array<{ text: string; route: RegularRoute }> }> = [
   {
     scene: 'THE PLAN DISAPPEARS',
@@ -213,8 +219,17 @@ export function FriendshipRoutes() {
           <h2>YOU FOUND<br /><strong>{routeInfo[result].name.toUpperCase()}</strong></h2>
           <p className={styles.routeLabel}>{routeInfo[result].label}</p>
           <div className={styles.videoSlot}>
-            <span>▶</span>
-            <p>A VIDEO MESSAGE IS WAITING HERE</p>
+            {routeVideos[result] ? (
+              <video key={result} controls playsInline preload="metadata" aria-label={`Video message from ${routeInfo[result].name}`}>
+                <source src={routeVideos[result]} type="video/mp4" />
+                Your browser does not support video playback.
+              </video>
+            ) : (
+              <>
+                <span>▶</span>
+                <p>A VIDEO MESSAGE IS WAITING HERE</p>
+              </>
+            )}
           </div>
           <div className={styles.resultActions}>
             {result !== 'pratik' && <button type="button" onClick={startQuiz}>TRY ANOTHER ROUTE</button>}
