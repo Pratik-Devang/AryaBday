@@ -20,6 +20,7 @@ const LANE_PATTERN = [1, 0, 2, 1, 2, 0, 0, 2, 1, 0, 2, 1];
 export function DodgerGame() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
+  const backgroundRef = useRef<HTMLImageElement | null>(null);
   const statusRef = useRef<GameStatus>('ready');
   const laneRef = useRef(1);
   const displayXRef = useRef(LANES[1]);
@@ -62,6 +63,9 @@ export function DodgerGame() {
       image.src = source;
       return image;
     });
+    const background = new Image();
+    background.src = '/game-assets/dodger/hello-kitty-background.jpg';
+    backgroundRef.current = background;
   }, []);
 
   useEffect(() => {
@@ -107,9 +111,19 @@ export function DodgerGame() {
 
     const drawScene = (time: number) => {
       context.clearRect(0, 0, WIDTH, HEIGHT);
+      const background = backgroundRef.current;
+      if (background?.complete && background.naturalWidth > 0) {
+        const scale = Math.max(WIDTH / background.naturalWidth, HEIGHT / background.naturalHeight);
+        const width = background.naturalWidth * scale;
+        const height = background.naturalHeight * scale;
+        context.drawImage(background, (WIDTH - width) / 2, (HEIGHT - height) / 2, width, height);
+      } else {
+        context.fillStyle = '#fff1c7';
+        context.fillRect(0, 0, WIDTH, HEIGHT);
+      }
       const gradient = context.createLinearGradient(0, 0, 0, HEIGHT);
-      gradient.addColorStop(0, '#fff1c7');
-      gradient.addColorStop(1, '#ff8aa8');
+      gradient.addColorStop(0, 'rgba(255,241,199,.36)');
+      gradient.addColorStop(1, 'rgba(255,138,168,.48)');
       context.fillStyle = gradient;
       context.fillRect(0, 0, WIDTH, HEIGHT);
 
