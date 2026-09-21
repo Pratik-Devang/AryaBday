@@ -29,13 +29,14 @@ const routeInfo: Record<Route, { name: string; label: string; symbol: string }> 
 };
 
 const routeVideos: Partial<Record<Route, string>> = {
+  pratik: '/videos/pratik.mp4',
   manasvi: '/videos/manasvi.mp4',
   aditya: '/videos/aditya.mp4',
   nikhil: '/videos/nikhil.mp4',
   sharanya: '/videos/sharanya.mp4',
 };
 
-const questions: Array<{ prompt: string; scene: string; answers: Array<{ text: string; route: RegularRoute }> }> = [
+const questions: Array<{ prompt: string; scene: string; answers: Array<{ text: string; route: Route }> }> = [
   {
     scene: 'THE PLAN DISAPPEARS',
     prompt: 'The entire plan gets cancelled at the last minute. What now?',
@@ -44,6 +45,7 @@ const questions: Array<{ prompt: string; scene: string; answers: Array<{ text: s
       { text: 'Suggest one sensible backup plan and make sure everyone is okay with it.', route: 'aditya' },
       { text: 'Give a brutally honest review of the planning, then suggest food.', route: 'nikhil' },
       { text: 'Start discussing three new plans at once until one somehow works.', route: 'sharanya' },
+      { text: 'Crack a joke, then find a new plan so the day is not wasted.', route: 'pratik' },
     ],
   },
   {
@@ -54,6 +56,7 @@ const questions: Array<{ prompt: string; scene: string; answers: Array<{ text: s
       { text: 'Check on her privately and ask what she actually needs.', route: 'aditya' },
       { text: 'Offer one blunt opinion, then quietly bring her something to eat.', route: 'nikhil' },
       { text: 'Notice immediately, keep her company, and gently pull her back in.', route: 'sharanya' },
+      { text: 'Sit beside her, make her laugh, and check in without making it a big thing.', route: 'pratik' },
     ],
   },
   {
@@ -64,6 +67,7 @@ const questions: Array<{ prompt: string; scene: string; answers: Array<{ text: s
       { text: 'Quietly understanding the rules and helping everyone else play.', route: 'aditya' },
       { text: 'Winning is now a matter of personal honour. No mercy.', route: 'nikhil' },
       { text: 'Talking through every move and turning the room into a performance.', route: 'sharanya' },
+      { text: 'Become the commentator, strategist, and unnecessary rival all at once.', route: 'pratik' },
     ],
   },
   {
@@ -74,6 +78,7 @@ const questions: Array<{ prompt: string; scene: string; answers: Array<{ text: s
       { text: 'Take over the practical problem and tell everyone exactly what to do.', route: 'aditya' },
       { text: 'Stay calm, state the obvious truth nobody wanted to hear, and fix it.', route: 'nikhil' },
       { text: 'Check on everyone first, then improvise a surprisingly effective solution.', route: 'sharanya' },
+      { text: 'Lighten the mood first, then quietly help fix whatever went wrong.', route: 'pratik' },
     ],
   },
   {
@@ -84,6 +89,7 @@ const questions: Array<{ prompt: string; scene: string; answers: Array<{ text: s
       { text: 'Send a meme, then answer the one message that genuinely needs help.', route: 'aditya' },
       { text: 'Drop an unfiltered opinion and immediately create a new argument.', route: 'nikhil' },
       { text: 'Send twelve messages, a voice note, and a completely unrelated photo.', route: 'sharanya' },
+      { text: 'Reply to everything at once: half useful, half bakchodi.', route: 'pratik' },
     ],
   },
   {
@@ -94,18 +100,20 @@ const questions: Array<{ prompt: string; scene: string; answers: Array<{ text: s
       { text: 'Bring something thoughtful and pretend it was no trouble at all.', route: 'aditya' },
       { text: 'Bring food, hand it over, and act like there is no emotional meaning.', route: 'nikhil' },
       { text: 'Bring something she likes, take photos, and make the moment unexpectedly loud.', route: 'sharanya' },
+      { text: 'Overthink one personal detail, make it happen, then act completely casual.', route: 'pratik' },
     ],
   },
 ];
 
 const regularRoutes: RegularRoute[] = ['manasvi', 'aditya', 'nikhil', 'sharanya'];
+const quizRoutes: Route[] = [...regularRoutes, 'pratik'];
 
 export function FriendshipRoutes() {
   const [view, setView] = useState<View>('intro');
   const [questionIndex, setQuestionIndex] = useState(0);
   const [result, setResult] = useState<Route | null>(null);
   const [unlocked, setUnlocked] = useState<RegularRoute[]>([]);
-  const scoresRef = useRef<Record<RegularRoute, number>>({ manasvi: 0, aditya: 0, nikhil: 0, sharanya: 0 });
+  const scoresRef = useRef<Record<Route, number>>({ manasvi: 0, aditya: 0, nikhil: 0, sharanya: 0, pratik: 0 });
 
   useEffect(() => {
     try {
@@ -117,7 +125,7 @@ export function FriendshipRoutes() {
   }, []);
 
   const startQuiz = useCallback(() => {
-    scoresRef.current = { manasvi: 0, aditya: 0, nikhil: 0, sharanya: 0 };
+    scoresRef.current = { manasvi: 0, aditya: 0, nikhil: 0, sharanya: 0, pratik: 0 };
     setQuestionIndex(0);
     setResult(null);
     setView('quiz');
@@ -141,7 +149,7 @@ export function FriendshipRoutes() {
     return () => lifecycle.abort();
   }, [startQuiz]);
 
-  const chooseAnswer = (route: RegularRoute) => {
+  const chooseAnswer = (route: Route) => {
     const nextScores = { ...scoresRef.current, [route]: scoresRef.current[route] + 1 };
     scoresRef.current = nextScores;
 
@@ -151,9 +159,11 @@ export function FriendshipRoutes() {
     }
 
     const highest = Math.max(...Object.values(nextScores));
-    const tied = regularRoutes.filter((candidate) => nextScores[candidate] === highest);
+    const tied = quizRoutes.filter((candidate) => nextScores[candidate] === highest);
     const winner = tied.includes(route) ? route : tied[0];
-    const nextUnlocked = Array.from(new Set([...unlocked, winner]));
+    const nextUnlocked = winner === 'pratik'
+      ? unlocked
+      : Array.from(new Set([...unlocked, winner]));
     setUnlocked(nextUnlocked);
     localStorage.setItem('arya-friend-routes', JSON.stringify(nextUnlocked));
     setResult(winner);
@@ -216,15 +226,25 @@ export function FriendshipRoutes() {
       {view === 'result' && result && (
         <section className={styles.resultPanel}>
           <span className={styles.resultSymbol}>{routeInfo[result].symbol}</span>
-          <p className={styles.eyebrow}>{result === 'pratik' ? 'ALL ROUTES COMPLETE' : 'NEW ROUTE DISCOVERED'}</p>
+          <p className={styles.eyebrow}>
+            {result === 'pratik'
+              ? (finalUnlocked ? 'ALL ROUTES COMPLETE' : 'SAVING BEST FOR LAST')
+              : 'NEW ROUTE DISCOVERED'}
+          </p>
           <h2>YOU FOUND<br /><strong>{routeInfo[result].name.toUpperCase()}</strong></h2>
           <p className={styles.routeLabel}>{routeInfo[result].label}</p>
           <div className={styles.videoSlot}>
-            {routeVideos[result] ? (
+            {routeVideos[result] && (result !== 'pratik' || finalUnlocked) ? (
               <video key={result} controls playsInline preload="metadata" aria-label={`Video message from ${routeInfo[result].name}`}>
                 <source src={routeVideos[result]} type="video/mp4" />
                 Your browser does not support video playback.
               </video>
+            ) : result === 'pratik' ? (
+              <>
+                <span>♥</span>
+                <p>SAVING BEST FOR LAST</p>
+                <small>Find all four other routes to unlock this message.</small>
+              </>
             ) : (
               <>
                 <span>▶</span>
@@ -233,7 +253,7 @@ export function FriendshipRoutes() {
             )}
           </div>
           <div className={styles.resultActions}>
-            {result !== 'pratik' && <button type="button" onClick={startQuiz}>TRY ANOTHER ROUTE</button>}
+            {(result !== 'pratik' || !finalUnlocked) && <button type="button" onClick={startQuiz}>TRY ANOTHER ROUTE</button>}
             <button type="button" className={styles.secondary} onClick={() => setView('routes')}>ALL ROUTES</button>
           </div>
         </section>
