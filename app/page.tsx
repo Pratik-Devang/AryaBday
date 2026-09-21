@@ -1,18 +1,20 @@
+import { MotionController } from './motion-controller';
+import { ProgressStatus } from './progress-status';
+
 const levels = [
-  { number: '01', title: '???', symbol: '♥' },
-  { number: '02', title: '???', symbol: '★' },
-  { number: '03', title: '???', symbol: '♪' },
-  { number: '04', title: '???', symbol: '✿' },
+  { number: '01', title: 'CHADDAR PARINDA', symbol: '↑', href: '/games/flappy' },
+  { number: '02', title: 'FACE DODGE', symbol: '↔', href: '/games/dodger' },
 ];
 
 export default function Home() {
   return (
     <main className="birthday-shell">
+      <MotionController />
       <div className="pixel-sparkle sparkle-one" aria-hidden="true">+</div>
       <div className="pixel-sparkle sparkle-two" aria-hidden="true">✦</div>
       <div className="pixel-sparkle sparkle-three" aria-hidden="true">+</div>
 
-      <header className="top-bar" aria-label="Birthday adventure header">
+      <header className="top-bar intro-animate intro-one" aria-label="Birthday adventure header">
         <div className="brand-mark" aria-hidden="true"><span>♥</span></div>
         <p>ARYA.EXE</p>
         <div className="top-status">
@@ -22,29 +24,23 @@ export default function Home() {
       </header>
 
       <section className="hero-panel" aria-labelledby="birthday-title">
-        <div className="hero-copy">
+        <div className="hero-copy intro-animate intro-two">
           <p className="eyebrow">PLAYER 1, ARE YOU READY?</p>
           <h1 id="birthday-title">HAPPY<span>BIRTHDAY</span>ARYA!</h1>
           <p className="intro">
             A tiny adventure made just for you. Complete each level, collect
-            the memories, and unlock your birthday surprise.
+            khilkhilaati hui yaadein, and unlock your birthday surprise.
           </p>
           <a className="start-button" href="#levels"><span aria-hidden="true">▶</span>PRESS START</a>
         </div>
 
-        <div className="game-window" aria-label="Birthday loading panel">
+        <div className="game-window intro-animate intro-three" aria-label="Birthday loading panel">
           <div className="window-bar">
             <span>♡ BIRTHDAY QUEST</span>
             <div className="window-controls" aria-hidden="true"><span>—</span><span>×</span></div>
           </div>
           <div className="window-screen">
-            <div className="pixel-heart" aria-hidden="true">
-              <span className="heart-row row-one" />
-              <span className="heart-row row-two" />
-              <span className="heart-row row-three" />
-              <span className="heart-row row-four" />
-              <span className="heart-row row-five" />
-            </div>
+            <div className="pink-mascot" role="img" aria-label="A tiny pink monster waving hello" />
             <p>LOADING BEST DAY EVER...</p>
             <div className="load-track" aria-label="Birthday adventure loaded"><span /></div>
             <small>100% READY</small>
@@ -53,23 +49,44 @@ export default function Home() {
       </section>
 
       <section className="levels-section" id="levels" aria-labelledby="levels-title">
-        <div className="section-heading">
+        <div className="section-heading scroll-reveal reveal-up">
           <div><p className="eyebrow">YOUR ADVENTURE</p><h2 id="levels-title">CHOOSE A LEVEL</h2></div>
-          <p className="progress-label">0 / 4 MEMORIES UNLOCKED</p>
+          <ProgressStatus />
         </div>
         <div className="level-grid">
-          {levels.map((level) => (
-            <article className="level-card" key={level.number} aria-label={`Level ${level.number}, locked`}>
-              <div className="level-topline"><span>LEVEL {level.number}</span><span className="lock" aria-hidden="true">▣</span></div>
-              <div className="level-symbol" aria-hidden="true">{level.symbol}</div>
-              <h3>{level.title}</h3><p>LOCKED</p>
-            </article>
-          ))}
+          {levels.map((level) => {
+            const card = (
+              <>
+                <div className="level-topline"><span>LEVEL {level.number}</span><span className="lock" aria-hidden="true">{level.href ? '▶' : '▣'}</span></div>
+                <div className="level-symbol" aria-hidden="true">{level.symbol}</div>
+                <h3>{level.title}</h3><p>{level.href ? 'PLAY NOW' : 'LOCKED'}</p>
+              </>
+            );
+
+            return level.href ? (
+              <a className="level-card level-card-playable scroll-reveal reveal-up" href={level.href} key={level.number} aria-label={`Play level ${level.number}: ${level.title}`}>
+                {card}
+              </a>
+            ) : (
+              <article className="level-card scroll-reveal reveal-up" key={level.number} aria-label={`Level ${level.number}, locked`}>
+                {card}
+              </article>
+            );
+          })}
         </div>
-        <p className="coming-soon">More levels are being prepared with love ♡</p>
+        <p className="coming-soon scroll-reveal reveal-up">Clear both games to unlock khilkhilaati hui yaadein ♡</p>
       </section>
 
-      <footer><span>© MADE FOR ARYA</span><span>WITH MANY, MANY HEARTS ♥</span></footer>
+      <section className="routes-teaser scroll-reveal reveal-up" aria-labelledby="routes-teaser-title">
+        <div>
+          <p className="eyebrow">A DIFFERENT KIND OF ADVENTURE</p>
+          <h2 id="routes-teaser-title">FRIENDSHIP ROUTES</h2>
+          <p>Five choices. Four hidden routes. One final message waiting at the end.</p>
+        </div>
+        <a href="/choices">ENTER THE STORY <span aria-hidden="true">→</span></a>
+      </section>
+
+      <footer className="scroll-reveal reveal-up"><span>© MADE FOR ARYA</span><span>WITH MANY, MANY HEARTS ♥</span></footer>
     </main>
   );
 }

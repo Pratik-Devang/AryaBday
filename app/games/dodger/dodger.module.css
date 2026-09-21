@@ -1,0 +1,48 @@
+.page { min-height: 100vh; padding: 24px; color: #442338; background-color: #ffd77c; background-image: linear-gradient(rgba(255,255,255,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.14) 1px,transparent 1px),radial-gradient(circle at 50% 0,#fff8cf 0,transparent 52%); background-size: 28px 28px,28px 28px,auto; font-family: var(--font-pixel),'Courier New',monospace; }
+.header { width: min(790px,100%); margin: 0 auto 20px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 18px; }
+.header div { text-align: center; }
+.header p { margin: 0 0 5px; color: #d52e70; font-size: .72rem; font-weight: 900; letter-spacing: .16em; }
+.header h1 { margin: 0; color: #442338; font-size: clamp(1.5rem,4vw,2.55rem); letter-spacing: -.05em; text-shadow: 4px 4px 0 #fff; }
+.backLink,.goal { justify-self: start; padding: 11px 13px; color: #442338; background: #fff8dc; border: 2px solid #442338; box-shadow: 4px 4px 0 #ec749f; font-size: .72rem; font-weight: 900; text-decoration: none; }
+.goal { justify-self: end; color: #c52765; }
+.backLink:focus-visible,.overlay button:focus-visible,.controls button:focus-visible { outline: 4px solid #d52e70; outline-offset: 4px; }
+.gameWrap { width: min(790px,100%); margin: 0 auto; position: relative; }
+.spriteCompanion { position: absolute; z-index: 3; top: 44px; right: -112px; pointer-events: none; filter: drop-shadow(4px 5px 0 rgba(68,35,56,.28)); }
+.scoreBar { min-height: 46px; padding: 9px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #8b4d69; background: #fff8dc; border: 3px solid #442338; border-bottom: 0; font-size: .7rem; font-weight: 900; letter-spacing: .06em; }
+.scoreBar strong { margin-left: 6px; color: #d52e70; }
+.stage { position: relative; overflow: hidden; border: 4px solid #442338; box-shadow: 10px 10px 0 #ec749f; cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none; }
+.stage canvas { display: block; width: 100%; height: auto; aspect-ratio: 18 / 19; }
+.overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px; text-align: center; background: rgba(255,239,195,.82); backdrop-filter: blur(3px); }
+.overlay span { margin-bottom: 12px; padding: 7px 10px; color: #fff; background: #d52e70; border: 2px solid #442338; font-size: .72rem; font-weight: 900; }
+.overlay h2 { max-width: 660px; margin: 0; color: #442338; font-size: clamp(1.55rem,5vw,3.15rem); line-height: 1.05; text-shadow: 4px 4px 0 #fff; }
+.overlay p { margin: 16px 0 24px; color: #75465f; font: 1rem Arial,Helvetica,sans-serif; }
+.overlay button,.controls button { padding: 14px 20px; color: #fff; background: #d52e70; border: 3px solid #442338; box-shadow: 5px 5px 0 #442338; font: 900 .8rem var(--font-pixel),'Courier New',monospace; letter-spacing: .06em; cursor: pointer; }
+.overlay button:hover,.controls button:hover { transform: translate(2px,2px); box-shadow: 3px 3px 0 #442338; }
+.rewardLink { margin: 0 0 13px; padding: 14px 20px; color: #442338; background: #fff8dc; border: 3px solid #442338; box-shadow: 5px 5px 0 #442338; font-size: .76rem; font-weight: 900; text-decoration: none; }
+.controls { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.controls button { min-height: 58px; background: #fff8dc; color: #442338; }
+.hint { margin: 24px auto 0; color: #7b4a62; font: 1rem Arial,Helvetica,sans-serif; text-align: center; }
+
+@media (max-width: 650px) {
+  .page { min-height: 100svh; padding: max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left)); }
+  .header { grid-template-columns: auto 1fr; gap: 8px; margin-bottom: 10px; }
+  .header div { grid-column: 1/-1; grid-row: 1; }
+  .header p { margin-bottom: 2px; font-size: .58rem; }
+  .header h1 { font-size: 1.25rem; text-shadow: 3px 3px 0 #fff; }
+  .backLink { grid-column: 1; grid-row: 2; }
+  .goal { grid-column: 2; grid-row: 2; }
+  .backLink,.goal { min-height: 40px; padding: 9px 10px; display: flex; align-items: center; font-size: .6rem; }
+  .stage { box-shadow: 6px 6px 0 #ec749f; }
+  .scoreBar { min-height: 38px; padding: 7px 8px; gap: 5px; font-size: .56rem; letter-spacing: .02em; }
+  .spriteCompanion { top: 40px; right: 3px; transform: scale(.78); transform-origin: top right; }
+  .scoreBar strong { margin-left: 3px; }
+  .overlay { padding: 12px; }
+  .overlay span { margin-bottom: 7px; padding: 5px 8px; font-size: .56rem; }
+  .overlay h2 { font-size: clamp(1.15rem,6vw,1.65rem); text-shadow: 3px 3px 0 #fff; }
+  .overlay p { margin: 8px 0 13px; font-size: .78rem; line-height: 1.3; }
+  .overlay button,.controls button { min-height: 44px; padding: 9px 12px; border-width: 2px; box-shadow: 3px 3px 0 #442338; font-size: .62rem; touch-action: manipulation; }
+  .rewardLink { margin-bottom: 7px; padding: 9px 12px; border-width: 2px; box-shadow: 3px 3px 0 #442338; font-size: .62rem; }
+  .controls { position: sticky; z-index: 5; bottom: max(8px,env(safe-area-inset-bottom)); margin-top: 12px; gap: 10px; }
+  .controls button { min-height: 52px; }
+  .hint { margin-top: 14px; font-size: .76rem; }
+}
